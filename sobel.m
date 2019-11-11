@@ -11,6 +11,8 @@ Gh = imfilter(block, Gy, 'replicate');
 meanGv = mean2(abs(Gv));
 meanGh = mean2(abs(Gh));
 [magVH, dirVH] = imgradient(Gv, Gh);
+magVH = mean2(magVH);
+dirVH = mean2(dirVH);
 Gx = [ 0  1  2;
       -1  0  1;
       -2 -1  0];
@@ -22,4 +24,6 @@ Gul = imfilter(block, Gy, 'replicate');
 meanGUR = mean2(abs(Gur));
 meanGUL = mean2(abs(Gul));
 [magD, dirD] = imgradient(Gur, Gul);
+magD = mean2(magD);
+dirD = mean2(dirD);
 end
