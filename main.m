@@ -14,8 +14,8 @@ components = 1;
 %     imshow(bY(:,:, i,1));
 % end
 block = bY(:,:,110,1);
-%[sobelV, sobelH, sobelUR, sobelUL] = sobel(block);
+[sobelV, sobelH, sobelMagVH, sobelDirVH, sobelUR, sobelUL, sobelMagD, sobelDirD] = sobel(block);
 %[robertsUR, robertsUL] = roberts(block);
-[prewittV, prewittH, prewittUR, prewittUL] = prewitt(block);
+%[prewittV, prewittH, prewittUR, prewittUL] = prewitt(block);
 %m = media(block);
 %[dH, dV, dUR, dUL, vH, vV, vUR, vUL] = desvio_variancia(block, blockSizeW, blockSizeH);
