@@ -1,4 +1,4 @@
-function [dH, dV, dUR, dUL, vH, vV, vUR, vUL] = desvio_variancia(block, blockSizeW, blockSizeH)
+function e = desvio_variancia(block, blockSizeW, blockSizeH)
 dsH = std(double(block),0,2); %Desvios horizontais (para cada linha)
 dsV = std(double(block),0,1); %Desvios verticais (para cada coluna)
 dsUR = zeros(blockSizeW+blockSizeH-1,1);
@@ -29,4 +29,5 @@ vH = mean(vsH);
 vV = mean(vsV);
 vUR = mean(vsUR);
 vUL = mean(vsUL);
+e = [dH dV dUR dUL vH vV vUR vUL];
 end

@@ -1,4 +1,4 @@
-function [meanGUR, meanGUL, magD, dirD] = roberts(block)
+function r = roberts(block)
 block = double(block);
 Gx = [-1 0;
        0 1];
@@ -11,4 +11,5 @@ meanGUL = mean2(abs(Gul));
 [magD, dirD] = imgradient(Gul, Gur);
 magD = mean2(magD);
 dirD = mean2(dirD);
+r = [meanGUR meanGUL magD dirD];
 end

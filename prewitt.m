@@ -1,4 +1,4 @@
-function [meanGv, meanGh, magVH, dirVH, meanGUR, meanGUL, magD, dirD] = prewitt(block)
+function p = prewitt(block)
 block = double(block);
 Gx = [-1  0  1;
       -1  0  1;
@@ -26,4 +26,5 @@ meanGUL = mean2(abs(Gul));
 [magD, dirD] = imgradient(Gur, Gul);
 magD = mean2(magD);
 dirD = mean2(dirD);
+p = [meanGv meanGh magVH dirVH meanGUR meanGUL magD dirD];
 end

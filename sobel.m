@@ -1,4 +1,4 @@
-function [meanGv, meanGh, magVH, dirVH, meanGUR, meanGUL, magD, dirD] = sobel(block)
+function s = sobel(block)
 block = double(block);
 Gx = [-1 0 1;
       -2 0 2;
@@ -26,4 +26,5 @@ meanGUL = mean2(abs(Gul));
 [magD, dirD] = imgradient(Gur, Gul);
 magD = mean2(magD);
 dirD = mean2(dirD);
+s = [meanGv meanGh magVH dirVH meanGUR meanGUL magD dirD];
 end
