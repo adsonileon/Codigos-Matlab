@@ -46,7 +46,7 @@ for i = 1:nFrames
         ph = prewitt(blockh);
         mh = media(blockh);
         eh = desvio_variancia(blockh, blockSizeW, blockSizeH);
-        fprintf(fid, format, "b1",s, r, p, m, e,sm, rm, pm, mm, em,sh, rh, ph, mh, eh);
+        fprintf(fid, format, mat2str(block),s, r, p, m, e,sm, rm, pm, mm, em,sh, rh, ph, mh, eh);
     end
 end
 fclose(fid);
