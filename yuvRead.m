@@ -46,3 +46,4 @@ for iFrame = 1:nFrame
     v(:,:,iFrame) = uint8(vImage);
 
 end
+fclose(fid);
