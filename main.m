@@ -10,24 +10,19 @@ components = 1;
 %numero do frame
 [bY, ~, ~] = readVideo(path, width, height, nFrames, blockSizeW, blockSizeH, components);
 [~, ~, nBlocks, ~] = size(bY);
-format = "%s,";
-for i=1:87
-    if i~=87
-        format = strcat(format, "%f,");
-    else
-        format = strcat(format, "%f\n");
-    end
-end
-fid1 = fopen("teste.csv", "w");
+fid = fopen("format.txt", "r");
+format = fgets(fid);
+fclose(fid);
+fid = fopen("teste.csv", "w");
 fid2 = fopen("columnsName.txt","r");
 line = fgetl(fid2);
 while ischar(line)
-    fprintf(fid1, "%s", line);
+    fprintf(fid, "%s", line);
     line = fgetl(fid2);
     if ischar(line)
-        fprintf(fid1, ",");
+        fprintf(fid, ",");
     else
-        fprintf(fid1, "\n");
+        fprintf(fid, "\n");
     end
 end
 fclose(fid2);
@@ -51,10 +46,10 @@ for i = 1:nFrames
         ph = prewitt(blockh);
         mh = media(blockh);
         eh = desvio_variancia(blockh, blockSizeW, blockSizeH);
-        fprintf(fid1, format, "b1",s, r, p, m, e,sm, rm, pm, mm, em,sh, rh, ph, mh, eh);
+        fprintf(fid, format, "b1",s, r, p, m, e,sm, rm, pm, mm, em,sh, rh, ph, mh, eh);
     end
 end
-fclose(fid1);
+fclose(fid);
 
 % Exibir um bloco
 % nBlocksW = floor(width/blockSizeW);
