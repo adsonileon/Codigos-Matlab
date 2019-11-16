@@ -10,13 +10,24 @@ components = 1;
 %numero do frame
 [bY, ~, ~] = readVideo(path, width, height, nFrames, blockSizeW, blockSizeH, components);
 [~, ~, nBlocks, ~] = size(bY);
-% columnsS = ["Gv Sobel","Gh Sobel","Mag1 Sobel","Dir1 Sobel","Gur Sobel","Gul Sobel","Mag2 Sobel","Dir2 Sobel"];
-% columnsR = ["Gul Roberts","Gur Roberts","Mag Roberts","Dir Roberts"];
-% columnsP = ["Gv Prewitt","Gh Prewitt","Mag1 Prewitt","Dir1 Prewitt","Gur Prewitt","Gul Prewitt","Mag2 Prewitt","Dir2 Prewitt"];
-% columnsM = ["Media"];
-% columnsE = ["Desvio h","Desvio v","Desvio ur","Desvio ul","Variancia h","Variancia v","Variancia ur","Variancia ul"];
-%matrix = [columnsS columnsR columnsP columnsM columnsE];
-matrix = zeros([nBlocks*nFrames,29]);
+columnsS = ["Gv Sobel","Gh Sobel","Mag1 Sobel","Dir1 Sobel","Gur Sobel","Gul Sobel","Mag2 Sobel","Dir2 Sobel"];
+columnsR = ["Gul Roberts","Gur Roberts","Mag Roberts","Dir Roberts"];
+columnsP = ["Gv Prewitt","Gh Prewitt","Mag1 Prewitt","Dir1 Prewitt","Gur Prewitt","Gul Prewitt","Mag2 Prewitt","Dir2 Prewitt"];
+columnsM = "Media";
+columnsE = ["Desvio h","Desvio v","Desvio ur","Desvio ul","Variancia h","Variancia v","Variancia ur","Variancia ul"];
+format1 = "%s,";
+format2 = "%s,";
+for i=1:29
+    if i~=29
+        format1 = strcat(format1, "%s,");
+        format2 = strcat(format2, "%f,");
+    else
+        format1 = strcat(format1, "%s\n");
+        format2 = strcat(format2, "%f\n");
+    end
+end
+fid = fopen("teste.csv", "w");
+fprintf(fid, format1, "Bloco",columnsS, columnsR, columnsP, columnsM, columnsE);
 for i = 1:nFrames
     for j=1:nBlocks
         s = sobel(bY(:,:,j,i));
@@ -24,10 +35,10 @@ for i = 1:nFrames
         p = prewitt(bY(:,:,j,i));
         m = media(bY(:,:,j,i));
         e = desvio_variancia(bY(:,:,j,i), blockSizeW, blockSizeH);
-        matrix((i-1)*nBlocks+j,:) = [s r p m e];
+        fprintf(fid, format2, "b1",s, r, p, m, e);
     end
 end
-csvwrite('teste.csv',matrix);
+fclose(fid);
 % nBlocksW = floor(width/blockSizeW);
 % nBlocksH = floor(height/blockSizeH);
 % for i=1:nBlocksH*nBlocksW
