@@ -1,10 +1,10 @@
 clear; clc;
 % Parâmetros
-path = '/home/ileon/Documentos/Codificacao/YUVSequences/D/BQSquare_416x240_60fps_8bit_420.yuv';
-width = 416;
-height = 240;
-bitDepth = 8;
-nFrames = 601;
+path = '/home/ileon/Documentos/Codificacao/YUVSequences/A2/CatRobot_3840x2160_60fps_10bit_420.yuv';
+width = 3840;
+height = 2160;
+bitDepth = 10;
+nFrames = 1;
 
 % Formato de cada linha no arquivo CSV
 fid = fopen("format.txt", "r");
@@ -32,6 +32,7 @@ end
 % Abre o arquivo do vídeo e realiza os cálculos para cada frame a para cada
 % tamanho de bloco
 fidVideo = fopen(path,"r");
+tic
 for i=1:nFrames
     disp(strcat("Frame ", num2str(i), " de ", num2str(nFrames)));
     [y, ~, ~] = yuvRead(fidVideo, width, height, bitDepth);
@@ -63,6 +64,7 @@ for i=1:nFrames
         end
     end
 end
+toc
 disp("Fechando arquivos");
 for i=1:6
     fclose(fids(i));
