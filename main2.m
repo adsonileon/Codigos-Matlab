@@ -1,19 +1,17 @@
 clear;clc;
 % Parâmetros
-% path = '/home/ileon/Documentos/Codificacao/YUVSequences/D/BQSquare_416x240_60fps_8bit_420.yuv';
-% width = 416;
-% height = 240;
-% bitDepth = 8;
-% fidVideo = fopen(path,"r");
-% [y, ~, ~] = yuvRead(fidVideo, width, height, bitDepth);
-% bY = blocks(y, width, height, 4, 4);
-% block = bY(:,:,106);
-% fclose(fidVideo);
-for i=-6:6
-    [urIndI, urIndJ] = digitalLine(1, i, 7, 7);
-    disp(strcat("Offset ", num2str(i)));
-    for j=1:size(urIndI)
-        disp(strcat(num2str(urIndI(j)),",",num2str(urIndJ(j))));
-    end
-    disp("end");
-end
+path = '/home/ileon/Documentos/Codificacao/YUVSequences/B/BasketballDrive_1920x1080_50fps_8bit_420.yuv';
+width = 1920;
+height = 1080;
+bitDepth = 8;
+skip = 50;
+fidVideo = fopen(path,"r");
+[y, ~, ~] = yuvRead(fidVideo, width, height, bitDepth);
+subplot(1,2,1);
+imshow(uint8(0.25*y));
+bytes = 1.5*width*height*skip;
+fseek(fidVideo,bytes,0);
+[y, ~, ~] = yuvRead(fidVideo, width, height, bitDepth);
+subplot(1,2,2);
+imshow(uint8(0.25*y));
+fclose(fidVideo);
