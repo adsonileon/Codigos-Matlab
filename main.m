@@ -1,11 +1,16 @@
 clear; clc;
 % Parâmetros
-path = '/home/ileon/Documentos/Codificacao/YUVSequences/A2/CatRobot_3840x2160_60fps_10bit_420.yuv';
-width = 3840;
-height = 2160;
+path = '/home/ileon/Documentos/Codificacao/YUVSequences/B/MarketPlace_1920x1080_60fps_10bit_420.yuv';
+width = 1920;
+height = 1080;
 bitDepth = 10;
-nFrames = 300;
-skip = 30;
+nFrames = 600;
+skip = [1, 4, 15, 60, 60, 60];
+if bitDepth==8
+    bytes = 1.5*width*height;
+else
+    bytes = 3*width*height;
+end
 
 % Formato de cada linha no arquivo CSV
 fid = fopen("format.txt", "r");
@@ -28,7 +33,7 @@ videoName = char(videoName(1));
 fileName = videoName;
 for i=1:6
     %fids1(i)=fopen(strcat(videoName,"_",num2str(bs(i)),"x",num2str(bs(i)),"_B.csv"),"w");
-    fids2(i)=fopen(strcat(videoName,"_",num2str(bs(i)),"x",num2str(bs(i)),"_O.csv"),"w");
+    fids2(i)=fopen(strcat(videoName,"_",num2str(bs(i)),"x",num2str(bs(i)),"_Skip",num2str(skip(i)),"_O.csv"),"w");
     %fprintf(fids1(i),"%s","Bloco");
     fprintf(fids2(i),"%s",columnsName);
 end
@@ -36,15 +41,14 @@ end
 % Abre o arquivo do vídeo e realiza os cálculos para cada frame a para cada
 % tamanho de bloco
 fidVideo = fopen(path,"r");
-for i=1:skip:nFrames
-    disp(strcat("Frame ", num2str(i), " de ", num2str(nFrames)));
-    [y, ~, ~] = yuvRead(fidVideo, width, height, bitDepth);
-    for j=1:6
-        disp(strcat("Gerando blocos de tamanho ", num2str(bs(j)),"x",num2str(bs(j))));
-        bY = blocks(y, width, height, bs(j), bs(j));
+for i=1:6
+    disp(strcat("Gerando blocos de tamanho ", num2str(bs(i)),"x",num2str(bs(i))));
+    for j=1:skip(i):nFrames
+        disp(strcat("Frame ", num2str(j), " de ", num2str(nFrames)));
+        [y, ~, ~] = yuvRead(fidVideo, width, height, bitDepth);
+        bY = blocks(y, width, height, bs(i), bs(i));
         [~, ~, nBlocks] = size(bY);
         blocksResults = zeros(nBlocks,87);
-        disp("Calculando os operadores para cada bloco");
         parfor k=1:nBlocks
             block = bY(:,:,k);
             s = sobel(block);
@@ -67,23 +71,16 @@ for i=1:skip:nFrames
             blocksResults(k,:)=[s r p m e sm rm pm mm em sh rh ph mh eh];
         end
         for l=1:nBlocks
-            fprintf(fids2(j), format, blocksResults(l,:));
+            fprintf(fids2(i), format, blocksResults(l,:));
+        end
+        if skip(i)>1 && j+skip(i)<=nFrames
+            fseek(fidVideo,skip(i)*bytes,0);
         end
     end
-    if i+30<=nFrames
-        if bitDepth==8
-            bytes = 1.5*width*height*skip;
-        else
-            bytes = 3*width*height*skip;
-        end
-        fseek(fidVideo, bytes, 0);
-    end
-end
-disp("Fechando arquivos");
-for i=1:6
-    %fclose(fids1(i));
+    frewind(fidVideo);
     fclose(fids2(i));
 end
+disp("Fechando arquivos");
 fclose(fidVideo);
 disp("Fim");
 
