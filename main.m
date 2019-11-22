@@ -74,7 +74,7 @@ for i=1:6
             fprintf(fids2(i), format, blocksResults(l,:));
         end
         if skip(i)>1 && j+skip(i)<=nFrames
-            fseek(fidVideo,skip(i)*bytes,0);
+            fseek(fidVideo,(skip(i)-1)*bytes,0);
         end
     end
     frewind(fidVideo);
