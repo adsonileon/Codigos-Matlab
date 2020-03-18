@@ -31,6 +31,9 @@ for i=1:blockSizeH:height
         % Guarda somente os blocos que são do tamanho blockSizeW x
         % blockSizeH
         if iEnd-i+1==blockSizeH && jEnd-j+1==blockSizeW
+%             if i==1 && iEnd==32 && j==33 && jEnd==16
+%                 bNumber
+%             end
             if i>=5 && j>=5
                 b(2:blockSizeH+3,2:blockSizeW+3,bNumber)=frame(i-2:iEnd,j-2:jEnd);
                 b(1,2:blockSizeW+3,bNumber)=frame(i-4,j-2:jEnd);
