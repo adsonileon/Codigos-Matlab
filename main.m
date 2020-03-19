@@ -20,11 +20,12 @@ format = fgetl(fid);
 fclose(fid);
 
 % Nome das colunas no arquivo CSV
-fid = fopen("columnsName2.txt","r");
+fid = fopen("columnsName.txt","r");
 columnsName = fgets(fid);
 fclose(fid);
 
-for v=1:4
+%for v=1:4
+for v=2:2
     if bitDepths(v)==8
         bytes = 1.5*widths(v)*heights(v);
     else
@@ -32,28 +33,31 @@ for v=1:4
     end
     
     % Inicializa os arquivos CSV
-    fids2 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    fids = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     videoName = split(char(videos(v)),"\");
     videoName = split(char(videoName(2)),".");
     videoName = char(videoName(1));
     fileName = strcat(path2,videoName);
-    for i=1:17
-        fids2(i)=fopen(strcat(fileName,"_",num2str(bw(i)),"x",num2str(bh(i)),".csv"),"w");
-        fprintf(fids2(i),"%s",columnsName);
+    %for i=1:17
+    for i=17:17
+        fids(i)=fopen(strcat(fileName,"_",num2str(bw(i)),"x",num2str(bh(i)),".csv"),"w");
+        fprintf(fids(i),"%s",columnsName);
     end
 
     % Abre o arquivo do vídeo e realiza os cálculos para cada frame a para cada
     % tamanho de bloco
     fidVideo = fopen(strcat(path,char(videos(v))),"r");
-    for i=1:17
+    %for i=1:17
+    for i=17:17
         disp(strcat("Gerando blocos de tamanho ", num2str(bw(i)),"x",num2str(bh(i))));
         nof = 1;
-        for j=1:8:nsFrames(v)
+        %for j=1:8:nsFrames(v)
+        for j=1:1
             [y, ~, ~] = yuvRead(fidVideo, widths(v), heights(v), bitDepths(v));
-            disp(strcat("Frame ", num2str(nof), " de ", num2str(nsFrames(v)/8)));
-            bY = blocks(y, widths(v), heights(v), bw(i), bw(i));
+            disp(strcat("Frame ", num2str(nof), " de ", num2str(fix(nsFrames(v)/8))));
+            bY = blocks(y, widths(v), heights(v), bw(i), bh(i));
             [~, ~, nBlocks] = size(bY);
-            blocksResults = zeros(nBlocks,87);
+            blocksResults = zeros(nBlocks,141);
             parfor k=1:nBlocks
                 block = bY(:,:,k);
                 s = sobel(block);
@@ -75,8 +79,20 @@ for v=1:4
                 ec = desvio_variancia(blockc);
                 blocksResults(k,:)=[s r p m e sm rm pm mm em sc rc pc mc ec];
             end
+            xul = 0;
+            yul = 0;
+            xbr = bw(i)-1;
+            ybr = bh(i)-1;
             for l=1:nBlocks
-                fprintf(fids2(i), format, blocksResults(l,:));
+                fprintf(fids(i), format, (nof-1)*7, xul, yul, xbr, ybr, blocksResults(l,:));
+                xul = xul + bw(i);
+                xbr = xbr + bw(i);
+                if xul >= widths(v) || xbr >= widths(v)
+                    yul = yul + bh(i);
+                    ybr = ybr + bh(i);
+                    xul = 0;
+                    xbr = bw(i)-1;
+                end
             end
             if j+8<=nsFrames(v)
                 fseek(fidVideo,7*bytes,0);
@@ -84,7 +100,7 @@ for v=1:4
             nof=nof+1;
         end
         frewind(fidVideo);
-        fclose(fids2(i));
+        fclose(fids(i));
     end
     disp("Fechando arquivos");
     fclose(fidVideo);

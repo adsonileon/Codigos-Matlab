@@ -13,10 +13,10 @@ bw     = blockSizeW;
 bh     = blockSizeH;
 startl = -bh+1;
 endl   = bw-1;
+startr = -bw+1;
+endr   = bh-1;
 if bw ~= bh
     if bw > bh
-        startr = -bw+1;
-        endr   = bh-1;
         bh = bw;
     else
         startr = -bh+1;
@@ -62,5 +62,53 @@ vH = mean(vsH);
 vV = mean(vsV);
 vUR = mean(vsUR);
 vUL = mean(vsUL);
-e = [dH dV dUR dUL vH vV vUR vUL];
+
+%Razões desvios
+if dH > 0
+    dV_dH = dV/dH;
+else
+    dV_dH = -1;
+end
+if dV > 0
+    dH_dV = dH/dV;
+else
+    dH_dV = -1;
+end
+
+if dUR > 0
+    dUL_dUR = dUL/dUR;
+else
+    dUL_dUR = -1;
+end
+if dUL > 0
+    dUR_dUL = dUR/dUL;
+else
+    dUR_dUL = -1;
+end
+%Fim razões desvios
+
+%Razões variâncias
+if vH > 0
+    vV_vH = vV/vH;
+else
+    vV_vH = -1;
+end
+if vV > 0
+    vH_vV = vH/vV;
+else
+    vH_vV = -1;
+end
+
+if vUR > 0
+    vUL_vUR = vUL/vUR;
+else
+    vUL_vUR = -1;
+end
+if vUL > 0
+    vUR_vUL = vUR/vUL;
+else
+    vUR_vUL = -1;
+end
+%Fim razões variâncias
+e = [dH dV dUR dUL dV_dH dH_dV dUL_dUR dUR_dUL vH vV vUR vUL vV_vH vH_vV vUL_vUR vUR_vUL];
 end
