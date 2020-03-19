@@ -26,6 +26,7 @@ fclose(fid);
 
 %for v=1:4
 for v=2:2
+    
     if bitDepths(v)==8
         bytes = 1.5*widths(v)*heights(v);
     else
@@ -49,6 +50,7 @@ for v=2:2
     fidVideo = fopen(strcat(path,char(videos(v))),"r");
     %for i=1:17
     for i=17:17
+        disp(char(videos(v)));
         disp(strcat("Gerando blocos de tamanho ", num2str(bw(i)),"x",num2str(bh(i))));
         nof = 1;
         %for j=1:8:nsFrames(v)
@@ -58,6 +60,7 @@ for v=2:2
             bY = blocks(y, widths(v), heights(v), bw(i), bh(i));
             [~, ~, nBlocks] = size(bY);
             blocksResults = zeros(nBlocks,141);
+            wb = parwaitbar(nBlocks);
             parfor k=1:nBlocks
                 block = bY(:,:,k);
                 s = sobel(block);
@@ -78,6 +81,7 @@ for v=2:2
                 mc = media(blockc);
                 ec = desvio_variancia(blockc);
                 blocksResults(k,:)=[s r p m e sm rm pm mm em sc rc pc mc ec];
+                wb.progress();
             end
             xul = 0;
             yul = 0;
@@ -102,10 +106,8 @@ for v=2:2
         frewind(fidVideo);
         fclose(fids(i));
     end
-    disp("Fechando arquivos");
     fclose(fidVideo);
 end
-disp("Fim");
 
 % % Exibir um bloco
 % nBlocksW = floor(width/blockSizeW);
