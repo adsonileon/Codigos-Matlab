@@ -54,61 +54,32 @@ for i=startl:endl
     dsUL(i+blockSizeH) = std(ulPixels);
     vsUL(i+blockSizeH) = var(ulPixels);
 end
+
 dH = mean(dsH);
 dV = mean(dsV);
+qDH = quantis(dsH);
+qDV = quantis(dsV);
 dUR = mean(dsUR);
 dUL = mean(dsUL);
+qDUR = quantis(dsUR);
+qDUL = quantis(dsUL);
 vH = mean(vsH);
 vV = mean(vsV);
+qVH = quantis(vsH);
+qVV = quantis(vsV);
 vUR = mean(vsUR);
 vUL = mean(vsUL);
+qVUR = quantis(vsUR);
+qVUL = quantis(vsUL);
 
-%Razões desvios
-if dH > 0
-    dV_dH = dV/dH;
-else
-    dV_dH = -1;
-end
-if dV > 0
-    dH_dV = dH/dV;
-else
-    dH_dV = -1;
-end
+dV_dH = div(dV, dH);
+qDV_qDH = div(qDV,qDH);
+dUL_dUR = div(dUL,dUR);
+qDUL_qDUR = div(qDUL,qDUR);
+vV_vH = div(vV,vH);
+qVV_qVH = div(qVV,qVH);
+vUL_vUR = div(vUL,vUR);
+qVUL_qVUR = div(qVUL,qVUR);
 
-if dUR > 0
-    dUL_dUR = dUL/dUR;
-else
-    dUL_dUR = -1;
-end
-if dUL > 0
-    dUR_dUL = dUR/dUL;
-else
-    dUR_dUL = -1;
-end
-%Fim razões desvios
-
-%Razões variâncias
-if vH > 0
-    vV_vH = vV/vH;
-else
-    vV_vH = -1;
-end
-if vV > 0
-    vH_vV = vH/vV;
-else
-    vH_vV = -1;
-end
-
-if vUR > 0
-    vUL_vUR = vUL/vUR;
-else
-    vUL_vUR = -1;
-end
-if vUL > 0
-    vUR_vUL = vUR/vUL;
-else
-    vUR_vUL = -1;
-end
-%Fim razões variâncias
-e = [dH dV dUR dUL dV_dH dH_dV dUL_dUR dUR_dUL vH vV vUR vUL vV_vH vH_vV vUL_vUR vUR_vUL];
+e = [dH qDH dV qDV dUR qDUR dUL qDUL dV_dH qDV_qDH dUL_dUR qDUL_qDUR vH qVH vV qVV vUR qVUR vUL qVUL vV_vH qVV_qVH vUL_vUR qVUL_qVUR];
 end

@@ -8,11 +8,15 @@ Gy = [-1 -2 -1;
        1  2  1];
 Gv = imfilter(block, Gx, 'replicate');
 Gh = imfilter(block, Gy, 'replicate');
-meanGv = mean2(abs(Gv));
-meanGh = mean2(abs(Gh));
+mGv = mean2(abs(Gv)); %Média
+mGh = mean2(abs(Gh)); %Média
+qGv = quantis(abs(Gv));
+qGh = quantis(abs(Gh));
 [magVH, dirVH] = imgradient(Gv, Gh);
-magVH = mean2(magVH);
-dirVH = mean2(dirVH);
+mMagVH = mean2(magVH); %Média
+mDirVH = mean2(dirVH); %Média
+qMagVH = quantis(magVH);
+qDirVH = quantis(dirVH);
 Gx = [ 0  1  2;
       -1  0  1;
       -2 -1  0];
@@ -21,30 +25,19 @@ Gy = [-2 -1  0;
        0  1  2];
 Gur = imfilter(block, Gx, 'replicate');
 Gul = imfilter(block, Gy, 'replicate');
-meanGur = mean2(abs(Gur));
-meanGul = mean2(abs(Gul));
+mGur = mean2(abs(Gur)); %Média
+mGul = mean2(abs(Gul)); %Média
+qGur = quantis(abs(Gur));
+qGul = quantis(abs(Gul));
 [magD, dirD] = imgradient(Gur, Gul);
-magD = mean2(magD);
-dirD = mean2(dirD);
-if meanGv > 0
-    meanGh_meanGv = meanGh/meanGv;
-else
-    meanGh_meanGv = -1;
-end
-if meanGh > 0
-    meanGv_meanGh = meanGv/meanGh;
-else
-    meanGv_meanGh = -1;
-end
-if meanGur > 0
-    meanGul_meanGur = meanGul/meanGur;
-else
-    meanGul_meanGur = -1;
-end
-if meanGul > 0
-    meanGur_meanGul = meanGur/meanGul;
-else
-    meanGur_meanGul = -1;
-end
-s = [meanGv meanGh magVH dirVH meanGur meanGul magD dirD meanGh_meanGv meanGv_meanGh meanGul_meanGur meanGur_meanGul];
+mMagD = mean2(magD); %Média
+mDirD = mean2(dirD); %Média
+qMagD = quantis(magD);
+qDirD = quantis(dirD);
+%Razões
+mGh_mGv   = div(mGh,mGv);
+qGv_qGh   = div(qGh,qGv);
+mGul_mGur = div(mGul,mGur);
+qGul_qGur = div(qGul,qGur);
+s = [mGv qGv mGh qGh mMagVH qMagVH mDirVH qDirVH mGur qGur mGul qGul mMagD qMagD mDirD qDirD mGh_mGv qGv_qGh mGul_mGur qGul_qGur];
 end

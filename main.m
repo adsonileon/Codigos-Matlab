@@ -59,7 +59,7 @@ for v=2:2
             disp(strcat("Frame ", num2str(nof), " de ", num2str(fix(nsFrames(v)/8))));
             bY = blocks(y, widths(v), heights(v), bw(i), bh(i));
             [~, ~, nBlocks] = size(bY);
-            blocksResults = zeros(nBlocks,141);
+            blocksResults = zeros(nBlocks,600);
             wb = parwaitbar(nBlocks);
             parfor k=1:nBlocks
                 block = bY(:,:,k);
