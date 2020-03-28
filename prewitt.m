@@ -35,8 +35,12 @@ mDirD = mean2(dirD);
 qMagD = quantis(magD);
 qDirD = quantis(dirD);
 mGh_mGv = div(mGh,mGv);
+mGh__mGv = dif(mGh,mGv);
 qGv_qGh = div(qGh,qGv);
+qGv__qGh = dif(qGh,qGv);
 mGul_mGur = div(mGul,mGur);
+mGul__mGur = dif(mGul,mGur);
 qGul_qGur = div(qGul,qGur);
-p = [mGv qGv mGh qGh mMagVH qMagVH mDirVH qDirVH mGur qGur mGul qGul mMagD qMagD mDirD qDirD mGh_mGv qGv_qGh mGul_mGur qGul_qGur];
+qGul__qGur = dif(qGul,qGur);
+p = [mGv qGv mGh qGh mMagVH qMagVH mDirVH qDirVH mGur qGur mGul qGul mMagD qMagD mDirD qDirD mGh_mGv mGh__mGv qGv_qGh qGv__qGh mGul_mGur mGul__mGur qGul_qGur qGul__qGur];
 end

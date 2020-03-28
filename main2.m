@@ -27,6 +27,7 @@ bY = blocks(y, width, height, 64, 64);
 block = bY(:,:,1);
 s = sobel(block);
 r = roberts(block);
+m = media(block);
 p = prewitt(block);
 e = desvio_variancia(block);
 % subplot(1,2,1);

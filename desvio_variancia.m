@@ -73,13 +73,21 @@ qVUR = quantis(vsUR);
 qVUL = quantis(vsUL);
 
 dV_dH = div(dV, dH);
+dV__dH = dif(dV,dH);
 qDV_qDH = div(qDV,qDH);
+qDV__qDH = dif(qDV,qDH);
 dUL_dUR = div(dUL,dUR);
+dUL__dUR = dif(dUL,dUR);
 qDUL_qDUR = div(qDUL,qDUR);
+qDUL__qDUR = dif(qDUL,qDUR);
 vV_vH = div(vV,vH);
+vV__vH = dif(vV,vH);
 qVV_qVH = div(qVV,qVH);
+qVV__qVH = dif(qVV,qVH);
 vUL_vUR = div(vUL,vUR);
+vUL__vUR = dif(vUL,vUR);
 qVUL_qVUR = div(qVUL,qVUR);
+qVUL__qVUR = dif(qVUL,qVUR);
 
-e = [dH qDH dV qDV dUR qDUR dUL qDUL dV_dH qDV_qDH dUL_dUR qDUL_qDUR vH qVH vV qVV vUR qVUR vUL qVUL vV_vH qVV_qVH vUL_vUR qVUL_qVUR];
+e = [dH qDH dV qDV dUR qDUR dUL qDUL dV_dH dV__dH qDV_qDH qDV__qDH dUL_dUR dUL__dUR qDUL_qDUR qDUL__qDUR vH qVH vV qVV vUR qVUR vUL qVUL vV_vH vV__vH qVV_qVH qVV__qVH vUL_vUR vUL__vUR qVUL_qVUR qVUL__qVUR];
 end
