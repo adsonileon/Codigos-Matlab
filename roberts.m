@@ -17,7 +17,9 @@ qMagD = quantis(magD);
 qDirD = quantis(dirD);
 mGur_mGul = div(mGur,mGul);
 mGur__mGul = dif(mGur,mGul);
+mGur___mGul = dif(mGur_mGul(:,1), mGur_mGul(:,2));
 qGur_qGul = div(qGur,qGul);
 qGur__qGul = dif(qGur,qGul);
-r = [mGur qGur mGul qGul mMagD qMagD mDirD qDirD mGur_mGul mGur__mGul qGur_qGul qGur__qGul];
+qGur___qGul = dif2(qGur_qGul);
+r = [mGur qGur mGul qGul mMagD qMagD mDirD qDirD mGur_mGul mGur__mGul mGur___mGul qGur_qGul qGur__qGul qGur___qGul];
 end

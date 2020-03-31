@@ -2,8 +2,8 @@ def postFormat():
 	fid = open("format.txt", "w+")
 	for i in range(5):
 		fid.write("%d,")
-	for i in range(963):
-		if i != 962:
+	for i in range(1233):
+		if i != 1232:
 			fid.write("%f,")
 		else:
 			fid.write("%f\\n")
@@ -31,17 +31,17 @@ def addRazoesQ(quan, raz, op, f):
 	return columnsName
 
 def postColumnsName():
-	grad1 = ["Gv", "Gh", "Mag1", "Dir1", "Gul", "Gur", "Mag2", "Dir2"]
-	grad2 = ["Gul", "Gur", "Mag1", "Dir1"]
-	raz1 = ["Gh/Gv", "Gv/Gh", "Gh-Gv", "Gv-Gh"]
-	raz2 = ["Gul/Gur", "Gur/Gul", "Gul-Gur", "Gur-Gul"]
+	grad1 = ["Gv", "Gh", "Mag1", "Dir1", "Gur", "Gul", "Mag2", "Dir2"]
+	grad2 = ["Gur", "Gul", "Mag1", "Dir1"]
+	raz1 = ["Gv/Gh", "Gh/Gv", "Gv-Gh", "Gh-Gv", "Gv/Gh-Gh/Gv", "Gh/Gv-Gv/Gh"]
+	raz2 = ["Gur/Gul", "Gul/Gur", "Gur-Gul", "Gul-Gur", "Gur/Gul-Gul/Gur", "Gul/Gur-Gur/Gul"]
 	oper = [" S", " R", " P"] #Sobel, Roberts, Prewitts
-	desv = ["Dv", "Dh", "Dul", "Dur"]
-	raz3 = ["Dh/Dv", "Dv/Dh", "Dh-Dv", "Dv-Dh"]
-	raz4 = ["Dul/Dur", "Dur/Dul", "Dul-Dur", "Dur-Dul"]
-	vari = ["Vv", "Vh", "Vul", "Vur"]
-	raz5 = ["Vh/Vv", "Vv/Vh", "Vh-Vv", "Vv-Vh"]
-	raz6 = ["Vul/Vur", "Vur/Vul", "Vul-Vur", "Vur-Vul"]
+	desv = ["Dv", "Dh", "Dur", "Dul"]
+	raz3 = ["Dv/Dh", "Dh/Dv", "Dv-Dh", "Dh-Dv", "Dv/Dh-Dh/Dv", "Dh/Dv-Dv/Dh"]
+	raz4 = ["Dur/Dul", "Dul/Dur", "Dur-Dul", "Dul-Dur", "Dur/Dul-Dul/Dur", "Dul/Dur-Dur/Dul"]
+	vari = ["Vv", "Vh", "Vur", "Vul"]
+	raz5 = ["Vv/Vh", "Vh/Vv", "Vv-Vh", "Vh-Vv", "Vv/Vh-Vh/Vv", "Vh/Vv-Vv/Vh"]
+	raz6 = ["Vur/Vul", "Vul/Vur", "Vur-Vul", "Vul-Vur", "Vur/Vul-Vul/Vur", "Vul/Vur-Vur/Vul"]
 	quan = [" Q25", " Q50", " Q75", " Q100"]
 	filt = [","," FM,", " C,"] #Filter Mean, Contraste
 	columnsName = "poc,xTL,yTL,xBR,yBR,"
@@ -51,31 +51,38 @@ def postColumnsName():
 				columnsName += addGrad(quan, grad1, op, f)
 				columnsName += addRazoes(raz1, op, f)
 				columnsName += addRazoesQ(quan, raz1[:2], op, f)
-				columnsName += addRazoesQ(quan, raz1[2:], op, f)
+				columnsName += addRazoesQ(quan, raz1[2:4], op, f)
+				columnsName += addRazoesQ(quan, raz1[4:], op, f)
 				columnsName += addRazoes(raz2, op, f)
 				columnsName += addRazoesQ(quan, raz2[:2], op, f)
-				columnsName += addRazoesQ(quan, raz2[2:], op, f)
+				columnsName += addRazoesQ(quan, raz2[2:4], op, f)
+				columnsName += addRazoesQ(quan, raz2[4:], op, f)
 			else:
 				columnsName += addGrad(quan, grad2, op, f)
 				columnsName += addRazoes(raz2, op, f)
 				columnsName += addRazoesQ(quan, raz2[:2], op, f)
-				columnsName += addRazoesQ(quan, raz2[2:], op, f)
+				columnsName += addRazoesQ(quan, raz2[2:4], op, f)
+				columnsName += addRazoesQ(quan, raz2[4:], op, f)
 		columnsName += "Media"+f
 		columnsName += addGrad(quan, desv, "", f)
 		columnsName += addRazoes(raz3, "", f)
 		columnsName += addRazoesQ(quan, raz3[:2], "", f)
-		columnsName += addRazoesQ(quan, raz3[2:], "", f)
+		columnsName += addRazoesQ(quan, raz3[2:4], "", f)
+		columnsName += addRazoesQ(quan, raz3[4:], "", f)
 		columnsName += addRazoes(raz4, "", f)
 		columnsName += addRazoesQ(quan, raz4[:2], "", f)
-		columnsName += addRazoesQ(quan, raz4[2:], "", f)
+		columnsName += addRazoesQ(quan, raz4[2:4], "", f)
+		columnsName += addRazoesQ(quan, raz4[4:], "", f)
 		columnsName += addGrad(quan, vari, "", f)
 		columnsName += addRazoes(raz5, "", f)
 		columnsName += addRazoesQ(quan, raz5[:2], "", f)
-		columnsName += addRazoesQ(quan, raz5[2:], "", f)
+		columnsName += addRazoesQ(quan, raz5[2:4], "", f)
+		columnsName += addRazoesQ(quan, raz5[4:], "", f)
 		columnsName += addRazoes(raz6, "", f)
 		columnsName += addRazoesQ(quan, raz6[:2], "", f)
-		columnsName += addRazoesQ(quan, raz6[2:], "", f)
+		columnsName += addRazoesQ(quan, raz6[2:4], "", f)
+		columnsName += addRazoesQ(quan, raz6[4:], "", f)
 	print(columnsName)
 
-#postColumnsName()
-postFormat()
+postColumnsName()
+#postFormat()

@@ -74,20 +74,28 @@ qVUL = quantis(vsUL);
 
 dV_dH = div(dV, dH);
 dV__dH = dif(dV,dH);
+dV___dH = dif(dV_dH(:,1),dV_dH(:,2));
 qDV_qDH = div(qDV,qDH);
 qDV__qDH = dif(qDV,qDH);
-dUL_dUR = div(dUL,dUR);
-dUL__dUR = dif(dUL,dUR);
-qDUL_qDUR = div(qDUL,qDUR);
-qDUL__qDUR = dif(qDUL,qDUR);
+qDV___qDH = dif2(qDV_qDH);
+dUR_dUL = div(dUR,dUL);
+dUR__dUL = dif(dUR,dUL);
+dUR___dUL = dif(dUR_dUL(:,1),dUR_dUL(:,2));
+qDUR_qDUL = div(qDUR,qDUL);
+qDUR__qDUL = dif(qDUR,qDUL);
+qDUR___qDUL = dif2(qDUR_qDUL);
 vV_vH = div(vV,vH);
 vV__vH = dif(vV,vH);
+vV___vH = dif(vV_vH(:,1),vV_vH(:,2));
 qVV_qVH = div(qVV,qVH);
 qVV__qVH = dif(qVV,qVH);
-vUL_vUR = div(vUL,vUR);
-vUL__vUR = dif(vUL,vUR);
-qVUL_qVUR = div(qVUL,qVUR);
-qVUL__qVUR = dif(qVUL,qVUR);
+qVV___qVH = dif2(qVV_qVH);
+vUR_vUL = div(vUR,vUL);
+vUR__vUL = dif(vUR,vUL);
+vUR___vUL = dif(vUR_vUL(:,1),vUR_vUL(:,2));
+qVUR_qVUL = div(qVUR,qVUL);
+qVUR__qVUL = dif(qVUR,qVUL);
+qVUR___qVUL = dif2(qVUR_qVUL);
 
-e = [dH qDH dV qDV dUR qDUR dUL qDUL dV_dH dV__dH qDV_qDH qDV__qDH dUL_dUR dUL__dUR qDUL_qDUR qDUL__qDUR vH qVH vV qVV vUR qVUR vUL qVUL vV_vH vV__vH qVV_qVH qVV__qVH vUL_vUR vUL__vUR qVUL_qVUR qVUL__qVUR];
+e = [dV qDV dH qDH dUR qDUR dUL qDUL dV_dH dV__dH dV___dH qDV_qDH qDV__qDH qDV___qDH dUR_dUL dUR__dUL dUR___dUL qDUR_qDUL qDUR__qDUL qDUR___qDUL vH qVH vV qVV vUR qVUR vUL qVUL vV_vH vV__vH vV___vH qVV_qVH qVV__qVH qVV___qVH vUR_vUL vUR__vUL vUR___vUL qVUR_qVUL qVUR__qVUL qVUR___qVUL];
 end
