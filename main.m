@@ -24,8 +24,8 @@ fid = fopen("columnsName.txt","r");
 columnsName = fgets(fid);
 fclose(fid);
 
-%for v=1:4
-for v=2:2
+for v=1:4
+%for v=2:2
     
     if bitDepths(v)==8
         bytes = 1.5*widths(v)*heights(v);
@@ -39,8 +39,8 @@ for v=2:2
     videoName = split(char(videoName(2)),".");
     videoName = char(videoName(1));
     fileName = strcat(path2,videoName);
-    %for i=1:17
-    for i=17:17
+    for i=1:17
+    %for i=17:17
         fids(i)=fopen(strcat(fileName,"_",num2str(bw(i)),"x",num2str(bh(i)),".csv"),"w");
         fprintf(fids(i),"%s",columnsName);
     end
@@ -48,15 +48,15 @@ for v=2:2
     % Abre o arquivo do vídeo e realiza os cálculos para cada frame a para cada
     % tamanho de bloco
     fidVideo = fopen(strcat(path,char(videos(v))),"r");
-    %for i=1:17
-    for i=17:17
+    for i=1:17
+    %for i=17:17
         disp(char(videos(v)));
         disp(strcat("Gerando blocos de tamanho ", num2str(bw(i)),"x",num2str(bh(i))));
         nof = 1;
-        %for j=1:8:nsFrames(v)
-        for j=1:1
+        for j=1:8:nsFrames(v)
+        %for j=1:1
             [y, ~, ~] = yuvRead(fidVideo, widths(v), heights(v), bitDepths(v));
-            disp(strcat("Frame ", num2str(nof), " de ", num2str(fix(nsFrames(v)/8))));
+            disp(strcat("Frame ", num2str(nof), " de ", num2str(ceil(nsFrames(v)/8))));
             bY = blocks(y, widths(v), heights(v), bw(i), bh(i));
             [~, ~, nBlocks] = size(bY);
             blocksResults = zeros(nBlocks,1233);
