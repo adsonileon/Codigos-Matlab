@@ -24,7 +24,7 @@ fid = fopen("columnsName.txt","r");
 columnsName = fgets(fid);
 fclose(fid);
 
-for v=1:4
+for v=3:4
 %for v=2:2
     
     if bitDepths(v)==8
