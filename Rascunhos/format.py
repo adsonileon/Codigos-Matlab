@@ -9,6 +9,16 @@ def postFormat():
 			fid.write("%f\\n")
 	fid.close()
 
+def postFormat2():
+	fid = open("format2.txt", "w+")
+	fid.write("%s,")
+	for i in range(8):
+		fid.write("%d,")
+	for i in range(411):
+		fid.write("%f,")
+	fid.write("%s\\n")
+	fid.close()
+
 def addGrad(quan, grad, op, f):
 	columnsName = ""
 	for g in grad:
@@ -43,8 +53,9 @@ def postColumnsName():
 	raz5 = ["Vv/Vh", "Vh/Vv", "Vv-Vh", "Vh-Vv", "Vv/Vh-Vh/Vv", "Vh/Vv-Vv/Vh"]
 	raz6 = ["Vur/Vul", "Vul/Vur", "Vur-Vul", "Vul-Vur", "Vur/Vul-Vul/Vur", "Vul/Vur-Vur/Vul"]
 	quan = [" Q25", " Q50", " Q75", " Q100"]
-	filt = [","," FM,", " C,"] #Filter Mean, Contraste
-	columnsName = "poc,xTL,yTL,xBR,yBR,"
+	#filt = [","," FM,", " C,"] #Filter Mean, Contraste
+	filt = [","]
+	columnsName = "sequence,width,height,qp,poc,xTL,yTL,xBR,yBR,"
 	for f in filt:
 		for op in oper:
 			if op != " R":
@@ -82,7 +93,8 @@ def postColumnsName():
 		columnsName += addRazoesQ(quan, raz6[:2], "", f)
 		columnsName += addRazoesQ(quan, raz6[2:4], "", f)
 		columnsName += addRazoesQ(quan, raz6[4:], "", f)
+	columnsName += "class"
 	print(columnsName)
 
 postColumnsName()
-#postFormat()
+#postFormat2()

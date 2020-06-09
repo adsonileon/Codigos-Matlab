@@ -1,12 +1,12 @@
 clear; clc;
 % Parâmetros relacionados ao vídeo
-path = 'D:\Codificacao\YUVSequences\';
-path2 = 'D:\Codificacao\Calculos\';
-videos = {'C\RaceHorses_832x480_30fps_8bit_420.yuv', 'D\BQSquare_416x240_60fps_8bit_420.yuv', 'E\Johnny_1280x720_60fps_8bit_420.yuv', 'F\SlideEditing_1280x720_30fps_8bit_420.yuv'};
-widths = [832, 416, 1280, 1280];
-heights = [480, 240, 720, 720];
-bitDepths = [8, 8, 8, 8];
-nsFrames = [300, 601, 600, 300];
+path = 'D:\Adson\YUVSequences\';
+path2 = 'D:\Adson\Calculos\';
+videos = {'A1\Tango2_3840x2160_60fps_10bit_420.yuv', 'A2\CatRobot_3840x2160_60fps_10bit_420.yuv', 'B\MarketPlace_1920x1080_60fps_10bit_420.yuv', 'F\ArenaOfValor_1920x1080_60fps_8bit_420.yuv'};
+widths = [3840, 3840, 1920, 1920];
+heights = [2160, 2160, 1080, 1080];
+bitDepths = [10, 10, 10, 8];
+nsFrames = [294, 300, 600, 600];
 % oldSkips = [0, 4, 15, 60, 60; 0, 31, 31, 31, 31];
 % skips = [0, 1, 2, 6, 20; 0, 1, 1, 5, 15];
 
@@ -24,7 +24,7 @@ fid = fopen("columnsName.txt","r");
 columnsName = fgets(fid);
 fclose(fid);
 
-for v=3:4
+for v=1:4
 %for v=2:2
     
     if bitDepths(v)==8
@@ -39,7 +39,7 @@ for v=3:4
     videoName = split(char(videoName(2)),".");
     videoName = char(videoName(1));
     fileName = strcat(path2,videoName);
-    for i=1:17
+    for i=1:1
     %for i=17:17
         fids(i)=fopen(strcat(fileName,"_",num2str(bw(i)),"x",num2str(bh(i)),".csv"),"w");
         fprintf(fids(i),"%s",columnsName);
