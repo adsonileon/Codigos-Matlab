@@ -5,7 +5,8 @@ root1 = 'D:\Adson\YUVSequences\';
 root2 = 'D:\Adson\Datasets\Angulares_QuatroClasses\';
 dataSetNames = {'dataset_4x4_4x32.csv', 'dataset_8x4_8x32.csv', 'dataset_16x4_16x32.csv', 'dataset_32x4_32x32.csv'};
 dataSetCount = {'count_4x4_4x32.txt', 'count_8x4_8x32.txt', 'count_16x4_16x32.txt', 'count_32x4_32x32.txt'};
-
+% dataSetNames = {'dataset_32x4_32x32.csv'};
+% dataSetCount = {'count_32x4_32x32.txt'};
 % Formato de cada linha no arquivo CSV
 fid = fopen("format3.txt", "r");
 format = fgetl(fid);
@@ -33,7 +34,7 @@ for d=1:4
         nBlocks = str2num(char(line));
 %         blockResults = zeros(nBlocks,1233);
         blockResults = zeros(nBlocks,141);
-        poc = zeros(1,nBlocks,'uint8');
+        poc = zeros(1,nBlocks,'double');
         xtl = zeros(1,nBlocks,'uint32');
         ytl = zeros(1,nBlocks,'uint32');
         xbr = zeros(1,nBlocks,'uint32');
@@ -50,6 +51,7 @@ for d=1:4
                     end
                     sequence = char(values(1));
                     [video,width,height,bitDepth,skip] = verifyVideo(sequence);
+                    disp(strcat(video," ",num2str(bitDepth), " ", num2str(skip)));
                     fidVideo = fopen(strcat(root1,video),"r");
                     if bitDepth==8
                         bytes = 1.5*width*height;
@@ -66,9 +68,17 @@ for d=1:4
                 disp(num2str(qp));
                 disp(strcat(num2str(bw),"x",num2str(bh)));
                 fseek(fidVideo,poc(1,i)*skip*bytes,'bof');
+%                 status = fseek(fidVideo,poc(1,i)*skip*bytes,'bof');
+%                 if status == -1
+%                     disp("Erro ao posicionar o arquivo");
+%                 end
                 [y,~,~] = yuvRead(fidVideo,width,height,bitDepth);
             elseif poc(1,i)~=poc(1,i-1)
                 fseek(fidVideo,poc(1,i)*skip*bytes,'bof');
+%                 status = fseek(fidVideo,poc(1,i)*skip*bytes,'bof');
+%                 if status == -1
+%                     disp("Erro ao posicionar o arquivo");
+%                 end
                 [y,~,~] = yuvRead(fidVideo,width,height,bitDepth);
             end
             xtl(1,i) = str2num(char(values(6)));

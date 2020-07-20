@@ -89,5 +89,29 @@ elseif strcmp(name,"ToddlerFountain")
     height = 2160;
     bitdepth = 10;
     skip = 10;
+elseif strcmp(name,"C")
+    video = "Validacao\C\RaceHorses_832x480_30fps_8bit_420.yuv";
+    width = 832;
+    height = 480;
+    bitdepth = 8;
+    skip = 8;
+elseif strcmp(name,"D")
+    video = "Validacao\D\BQSquare_416x240_60fps_8bit_420.yuv";
+    width = 416;
+    height = 240;
+    bitdepth = 8;
+    skip = 8;
+elseif strcmp(name,"E")
+    video = "Validacao\E\Johnny_1280x720_60fps_8bit_420.yuv";
+    width = 1280;
+    height = 720;
+    bitdepth = 8;
+    skip = 8;
+elseif strcmp(name,"F(1)")
+    video = "Validacao\F(1)\SlideEditing_1280x720_30fps_8bit_420.yuv";
+    width = 1280;
+    height = 720;
+    bitdepth = 8;
+    skip = 8;
 end
 end
