@@ -53,7 +53,7 @@ fclose(file);
 
 file_out = fopen(path_csv_out, "w+"); %abre o arquivo de saída
 if file_out == -1
-    error("Erro ao abrir o arquivo de saída: %s", path_out);
+    error("Erro ao abrir o arquivo de saída: %s", path_csv_out);
 end
 fprintf(file_out, "%s", columns_name); %escreve o nome das colunas no arquivo de saída
 fclose(file_out);
@@ -180,7 +180,7 @@ end
 
 file_out = fopen(path_csv_out, "a"); %abre o arquivo de saída
 if file_out == -1
-    error("Erro ao abrir o arquivo de saída: %s", path_out);
+    error("Erro ao abrir o arquivo de saída: %s", path_csv_out);
 end
 for i=1:n_samples
     fprintf(file_out,format_specifier,videos(1,i),frames(1,i),xs(1,i),ys(1,i),widths(1,i),heights(1,i),qps(1,i),features(i,:),classes(1,i));
